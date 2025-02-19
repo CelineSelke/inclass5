@@ -180,7 +180,7 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
       }
   }
 
-  void _activity(){
+  void _activity() {
       if(dropdownValue == "Fetch"){
           happinessLevel = (happinessLevel + 20).clamp(0, 100);
           hungerLevel = (hungerLevel + 10).clamp(0, 100);
@@ -191,6 +191,7 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
       }
       if(dropdownValue == "Sleep"){
           energyLevel = (energyLevel + 30).clamp(0, 100);
+    }
   }
 
 
@@ -281,4 +282,4 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
     )
     );
   }
-}}
+}
