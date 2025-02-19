@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 
 void main() {
   runApp(MaterialApp(
@@ -15,6 +16,15 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
   String petName = "Your Pet";
   int happinessLevel = 50;
   int hungerLevel = 50;
+  Timer? winTimer;
+  Timer? timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _startTimer();
+    _startWinTimer();
+  }
 
   // Function to increase happiness and update hunger when playing with the pet
   void _playWithPet() {
@@ -39,16 +49,84 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
     } else {
       happinessLevel = (happinessLevel + 10).clamp(0, 100);
     }
+    _checkLoss();
   }
 
   // Increase hunger level slightly when playing with the pet
   void _updateHunger() {
     hungerLevel = (hungerLevel + 5).clamp(0, 100);
-    if (hungerLevel > 100) {
+    if (hungerLevel >= 100) {
       hungerLevel = 100;
       happinessLevel = (happinessLevel - 20).clamp(0, 100);
     }
+    _checkLoss();
   }
+
+  void _startTimer() {
+    Timer.periodic(Duration(seconds: 30), (timer) {
+      if (mounted) {
+        _updateHunger();
+        _checkLoss();
+      }
+    });
+  }
+
+  void _startWinTimer() {
+    winTimer = Timer(Duration(seconds: 300), () {
+      _showDialog("You Win!", "You're a good pet owner!");
+      _resetGame();
+    });
+  }
+
+  void _checkLoss() {
+    if (hungerLevel >= 100 && happinessLevel <= 10) {
+      _showDialog("Game Over", "Your pet is gone.");
+      _resetGame();
+    }
+  }
+
+  void _showDialog(String title, String content) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(content),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _resetGame() {
+    setState(() {
+      hungerLevel = 50;
+      happinessLevel = 50;
+    });
+    dispose();
+    _restartTimers();
+  }
+
+  void _restartTimers() {
+    _startTimer();
+    _startWinTimer(); // Restart the timer
+  }
+
+  @override
+  void dispose() {
+    // Cancel the timer when the widget is disposed to prevent memory leaks
+    timer?.cancel();
+    winTimer?.cancel();
+    super.dispose();
+  }
+
 
   @override
   Widget build(BuildContext context) {
