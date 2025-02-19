@@ -35,6 +35,7 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
       happinessLevel = (happinessLevel + 10).clamp(0, 100);
       _updateMood();
       _updateHunger();
+      _updateEnergy(-10);
     });
   }
 
@@ -43,6 +44,7 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
     setState(() {
       hungerLevel = (hungerLevel - 10).clamp(0, 100);
       _updateHappiness();
+      _updateEnergy(10);
     });
   }
 
@@ -67,6 +69,10 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
     _checkLoss();
   }
 
+  void _updateEnergy(int amount) {
+    energyLevel = (energyLevel + amount).clamp(0, 100);
+  }
+
   void _startTimer() {
     Timer.periodic(Duration(seconds: 30), (timer) {
       if (mounted) {
@@ -78,8 +84,10 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
 
   void _startWinTimer() {
     winTimer = Timer(Duration(seconds: 300), () {
-      _showDialog("You Win!", "You're a good pet owner!");
-      _resetGame();
+      if (mounted) {
+        _showDialog("You Win!", "You're a good pet owner!");
+        _resetGame();
+      }
     });
   }
 
@@ -115,21 +123,14 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
       hungerLevel = 50;
       happinessLevel = 50;
     });
-    dispose();
     _restartTimers();
   }
 
   void _restartTimers() {
-    _startTimer();
-    _startWinTimer(); // Restart the timer
-  }
-
-  @override
-  void dispose() {
-    // Cancel the timer when the widget is disposed to prevent memory leaks
     timer?.cancel();
     winTimer?.cancel();
-    super.dispose();
+    _startTimer();
+    _startWinTimer(); // Restart the timer
   }
 
 
@@ -192,6 +193,17 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              Text("Energy:", style: TextStyle(fontSize: 20,),),
+              SizedBox(height: 15),
+              Container(
+                width: 200,
+                child: LinearProgressIndicator(
+                  value: energyLevel/100,
+                  backgroundColor: Colors.grey[300],
+                  valueColor: AlwaysStoppedAnimation(Colors.blue),
+                ),
+              ),
+              SizedBox(height: 20),
               Text("Mood: $mood", style: TextStyle(fontSize: 20,),),
               Text(
                 'Name: $petName',
