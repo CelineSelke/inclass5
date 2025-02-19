@@ -110,7 +110,7 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
               },
-              child: Text('OK'),
+              child: Text('Restart'),
             ),
           ],
         );
