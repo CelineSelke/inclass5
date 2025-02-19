@@ -92,7 +92,7 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
 
       if (mood == "Unhappy ☹️"){
           setState(() {
-              _themeMode = ThemeData(primaryColor: Colors.red, appBarTheme: AppBarTheme(backgroundColor: Colors.red), scaffoldBackgroundColor: Colors.pink[50]);
+              _themeMode = ThemeData(primaryColor: Colors.red, appBarTheme: AppBarTheme(backgroundColor: Colors.red), scaffoldBackgroundColor: Colors.red[100]);
           });
       }
   }
