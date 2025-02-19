@@ -122,6 +122,7 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
     setState(() {
       hungerLevel = 50;
       happinessLevel = 50;
+      energyLevel = 50;
     });
     _restartTimers();
   }
