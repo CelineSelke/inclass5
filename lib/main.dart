@@ -16,7 +16,7 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
   int happinessLevel = 50;
   int hungerLevel = 50;
   String mood = "Happy 😊";
-  ThemeData _themeMode = ThemeData(primaryColor: Colors.green, appBarTheme: AppBarTheme(backgroundColor: Colors.green));
+  ThemeData _themeMode = ThemeData(primaryColor: Colors.green, appBarTheme: AppBarTheme(backgroundColor: Colors.green), scaffoldBackgroundColor: Colors.lightGreen);
 
   // Function to increase happiness and update hunger when playing with the pet
   void _playWithPet() {
@@ -80,19 +80,19 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
   void _updateTheme(){
       if (mood == "Happy 😊"){
           setState(() {
-              _themeMode = ThemeData(primaryColor: Colors.green, appBarTheme: AppBarTheme(backgroundColor: Colors.green));
+              _themeMode = ThemeData(primaryColor: Colors.green, appBarTheme: AppBarTheme(backgroundColor: Colors.green),scaffoldBackgroundColor: Colors.lightGreen[100]);
           });
       }
 
       if (mood == "Neutral 😐"){
           setState(() {
-              _themeMode = ThemeData(primaryColor: Colors.yellow, appBarTheme: AppBarTheme(backgroundColor: Colors.yellow));
+              _themeMode = ThemeData(primaryColor: Colors.yellow, appBarTheme: AppBarTheme(backgroundColor: Colors.yellow),scaffoldBackgroundColor: Colors.yellow[100]);
           });
       }
 
       if (mood == "Unhappy ☹️"){
           setState(() {
-              _themeMode = ThemeData(primaryColor: Colors.red, appBarTheme: AppBarTheme(backgroundColor: Colors.red));
+              _themeMode = ThemeData(primaryColor: Colors.red, appBarTheme: AppBarTheme(backgroundColor: Colors.red), scaffoldBackgroundColor: Colors.pink[50]);
           });
       }
   }
