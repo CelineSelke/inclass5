@@ -16,6 +16,7 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
   String petName = "Your Pet";
   int happinessLevel = 50;
   int hungerLevel = 50;
+  int energyLevel = 50;
   String mood = "Happy 😊";
   ThemeData _themeMode = ThemeData(primaryColor: Colors.green, appBarTheme: AppBarTheme(backgroundColor: Colors.green), scaffoldBackgroundColor: Colors.lightGreen);
   Timer? winTimer;
