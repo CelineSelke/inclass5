@@ -21,6 +21,8 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
   ThemeData _themeMode = ThemeData(primaryColor: Colors.green, appBarTheme: AppBarTheme(backgroundColor: Colors.green), scaffoldBackgroundColor: Colors.lightGreen);
   Timer? winTimer;
   Timer? timer;
+  var activities = ['Fetch','Walk','Sleep'];
+  String dropdownValue = "Fetch";
 
   @override
   void initState() {
@@ -176,6 +178,19 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
       }
   }
 
+  void _activity(){
+      if(dropdownValue == "Fetch"){
+          happinessLevel = (happinessLevel + 20).clamp(0, 100);
+          hungerLevel = (hungerLevel + 10).clamp(0, 100);
+      }
+      if(dropdownValue == "Walk"){
+          happinessLevel = (happinessLevel + 10).clamp(0, 100);
+          hungerLevel = (hungerLevel + 20).clamp(0, 100);
+      }
+      if(dropdownValue == "Sleep"){
+          energyLevel = (energyLevel + 30).clamp(0, 100);
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -229,11 +244,28 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
             
 
                 ),
-            )
+                
+            ), 
+            DropdownButton(value: dropdownValue,
+            icon: const Icon(Icons.keyboard_arrow_down),
+            items: activities.map((String items) {
+                return DropdownMenuItem(
+                  value: items,
+                  child: Text(items),
+                );
+              }).toList(),
+            onChanged: (String? newval) {
+              setState(() {
+                  dropdownValue = newval!;
+                  _activity();
+              });
+            },
+
+            ),
             ],
           ),
         ),
     )
     );
   }
-}
+}}
