@@ -216,6 +216,19 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
                 onPressed: _feedPet,
                 child: Text('Feed Your Pet'),
               ),
+              SizedBox(width: 300, height: 100, 
+                child: TextField(textAlign: TextAlign.center,
+                onChanged: (value){
+                
+                setState((){
+                    petName = value;
+                });
+                },
+                decoration: InputDecoration(hintText: "Change Pet Name"),
+            
+
+                ),
+            )
             ],
           ),
         ),
